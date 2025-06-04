@@ -30,18 +30,13 @@
 # def translate_dna(sequence):
 #     codons = {
 #         "TTT": "F", "TTC": "F", "TTA": "L", "TTG": "L", "CTT": "L", "CTC": "L", "CTA": "L", "CTG": "L", "ATT": "I",
-#         "ATC": "I",
-#         "ATA": "I", "ATG": "M", "GTT": "V", "GTC": "V", "GTA": "V", "GTG": "V", "TCT": "S", "TCC": "S", "TCA": "S",
-#         "TCG": "S",
-#         "CCT": "P", "CCC": "P", "CCA": "P", "CCG": "P", "ACT": "T", "ACC": "T", "ACA": "T", "ACG": "T", "GCT": "A",
-#         "GCC": "A",
-#         "GCA": "A", "GCG": "A", "TAT": "Y", "TAC": "Y", "TAA": "*", "TAG": "*", "CAT": "H", "CAC": "H", "CAA": "Q",
-#         "CAG": "Q",
-#         "AAT": "N", "AAC": "N", "AAA": "K", "AAG": "K", "GAT": "D", "GAC": "D", "GAA": "E", "GAG": "E", "TGT": "C",
-#         "TGC": "C",
-#         "TGA": "*", "TGG": "W", "CGT": "R", "CGC": "R", "CGA": "R", "CGG": "R", "AGT": "S", "AGC": "S", "AGA": "R",
-#         "AGG": "R",
-#         "GGT": "G", "GGC": "G", "GGA": "G", "GGG": "G",
+#         "ATC": "I", "ATA": "I", "ATG": "M", "GTT": "V", "GTC": "V", "GTA": "V", "GTG": "V", "TCT": "S", "TCC": "S",
+#         "TCA": "S", "TCG": "S", "CCT": "P", "CCC": "P", "CCA": "P", "CCG": "P", "ACT": "T", "ACC": "T", "ACA": "T",
+#         "ACG": "T", "GCT": "A", "GCC": "A", "GCA": "A", "GCG": "A", "TAT": "Y", "TAC": "Y", "TAA": "*", "TAG": "*",
+#         "CAT": "H", "CAC": "H", "CAA": "Q", "CAG": "Q", "AAT": "N", "AAC": "N", "AAA": "K", "AAG": "K", "GAT": "D",
+#         "GAC": "D", "GAA": "E", "GAG": "E", "TGT": "C", "TGC": "C", "TGA": "*", "TGG": "W", "CGT": "R", "CGC": "R",
+#         "CGA": "R", "CGG": "R", "AGT": "S", "AGC": "S", "AGA": "R", "AGG": "R", "GGT": "G", "GGC": "G", "GGA": "G",
+#         "GGG": "G",
 #     }
 #     sequence = sequence.upper()
 #     protein = ""
@@ -57,32 +52,75 @@
 # challenge_sequence = "ATGGATTTATCTGCTCTTCGCGTTGAAGAAGTACAAAATGTCATTAATGCTATGCAGAAAATCTTAGAGTGTCCCATCTGTCTGGAGTTGATCAAGGAACCTGTCTCCACAAAGTGTGACCACATATTTTGCAAATTTTGCATGCTGAAACTTCTCAACCAGAAGAAAGGGCCTTCACAGTGTCCTTTATGTAAGAATGATATAACCAAA"
 # print(translate_dna(challenge_sequence))
 
-## 2.3: Write a function which generates the reverse complement of a sequence. Bonus points for dealing with gaps or
-## incorrect base letters.
+# ## 2.3: Write a function which generates the reverse complement of a sequence. Bonus points for dealing with gaps or
+# ## incorrect base letters.
+#
+# def reverse_complement(sequence):
+#     """
+#     Takes a sequence and returns a reverse complement, which means complement bases and reversed in order."
+#     N will return N; gaps as - or as a space will return -. Unknown bases will return X.
+#     """
+#     complements = {
+#         "T": "A",
+#         "A": "T",
+#         "G": "C",
+#         "C": "G",
+#         "N": "N", # ambiguous base
+#         "X": "X", # unknown base
+#         "-": "-", # gap
+#         " ": "-", # treat spaces as gaps
+#     }
+#     sequence = sequence.upper()
+#     complement = ""
+#
+#     for each_base in sequence:
+#         base = complements.get(each_base, "X")
+#         complement += base
+#
+#     return complement[::-1]
+#
+# seq_for_rev_complement = "aggagtaagcccttgcaactggaaatacacccattg"
+# print(reverse_complement(seq_for_rev_complement))
 
-def reverse_complement(sequence):
-    """
-    Takes a sequence and returns a reverse complement, which means complement bases and reversed in order."
-    N will return N; gaps as - or as a space will return -. Unknown bases will return X.
-    """
-    complements = {
-        "T": "A",
-        "A": "T",
-        "G": "C",
-        "C": "G",
-        "N": "N", # ambiguous base
-        "X": "X", # unknown base
-        "-": "-", # gap
-        " ": "-", # treat spaces as gaps
+## Combine translation and reverse complement functions to generate a six-frame translation of
+## a DNA sequence. This means you should translate three forward reading frames starting at the
+## first, second, and third base of the first codon of the forward sequence, and three reverse
+## reading frames starting at the first, second, and third base of the first codon of the reverse
+## complement of the sequence.
+
+def forward_and_reverse(sequence):
+    codons = {
+            "TTT": "F", "TTC": "F", "TTA": "L", "TTG": "L", "CTT": "L", "CTC": "L", "CTA": "L", "CTG": "L", "ATT": "I",
+            "ATC": "I", "ATA": "I", "ATG": "M", "GTT": "V", "GTC": "V", "GTA": "V", "GTG": "V", "TCT": "S", "TCC": "S",
+            "TCA": "S", "TCG": "S", "CCT": "P", "CCC": "P", "CCA": "P", "CCG": "P", "ACT": "T", "ACC": "T", "ACA": "T",
+            "ACG": "T", "GCT": "A", "GCC": "A", "GCA": "A", "GCG": "A", "TAT": "Y", "TAC": "Y", "TAA": "*", "TAG": "*",
+            "CAT": "H", "CAC": "H", "CAA": "Q", "CAG": "Q", "AAT": "N", "AAC": "N", "AAA": "K", "AAG": "K", "GAT": "D",
+            "GAC": "D", "GAA": "E", "GAG": "E", "TGT": "C", "TGC": "C", "TGA": "*", "TGG": "W", "CGT": "R", "CGC": "R",
+            "CGA": "R", "CGG": "R", "AGT": "S", "AGC": "S", "AGA": "R", "AGG": "R", "GGT": "G", "GGC": "G", "GGA": "G",
+            "GGG": "G",
     }
     sequence = sequence.upper()
-    complement = ""
+    protein1 = ""
+    protein2 = ""
+    protein3 = ""
 
-    for each_base in sequence:
-        base = complements.get(each_base, "X")
-        complement += base
+    for first_codon in range(0, len(sequence)-2, 3):
+        codon1 = sequence[first_codon:first_codon+3]
+        amino_acid1 = codons.get(codon1, "X")
+        protein1 += amino_acid1
 
-    return complement[::-1]
+    for second_codon in range(1, len(sequence)-2, 3):
+        codon2 = sequence[second_codon:second_codon+3]
+        amino_acid2 = codons.get(codon2, "X")
+        protein2 += amino_acid2
 
-seq_for_rev_complement = "aggagtaagcccttgcaactggaaatacacccattg"
-print(reverse_complement(seq_for_rev_complement))
+    for third_codon in range(2, len(sequence)-2, 3):
+        codon3 = sequence[third_codon:third_codon+3]
+        amino_acid3 = codons.get(codon3, "X")
+        protein3 += amino_acid3
+
+    return protein1, protein2, protein3
+
+seq = "aggagtaagcccttgcaactggaaatacacccattg"
+
+print(forward_and_reverse(seq))
