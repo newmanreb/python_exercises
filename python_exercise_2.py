@@ -82,45 +82,114 @@
 # seq_for_rev_complement = "aggagtaagcccttgcaactggaaatacacccattg"
 # print(reverse_complement(seq_for_rev_complement))
 
-## Combine translation and reverse complement functions to generate a six-frame translation of
+## 2.4  Combine translation and reverse complement functions to generate a six-frame translation of
 ## a DNA sequence. This means you should translate three forward reading frames starting at the
 ## first, second, and third base of the first codon of the forward sequence, and three reverse
 ## reading frames starting at the first, second, and third base of the first codon of the reverse
 ## complement of the sequence.
 
-def forward_and_reverse(sequence):
-    codons = {
-            "TTT": "F", "TTC": "F", "TTA": "L", "TTG": "L", "CTT": "L", "CTC": "L", "CTA": "L", "CTG": "L", "ATT": "I",
-            "ATC": "I", "ATA": "I", "ATG": "M", "GTT": "V", "GTC": "V", "GTA": "V", "GTG": "V", "TCT": "S", "TCC": "S",
-            "TCA": "S", "TCG": "S", "CCT": "P", "CCC": "P", "CCA": "P", "CCG": "P", "ACT": "T", "ACC": "T", "ACA": "T",
-            "ACG": "T", "GCT": "A", "GCC": "A", "GCA": "A", "GCG": "A", "TAT": "Y", "TAC": "Y", "TAA": "*", "TAG": "*",
-            "CAT": "H", "CAC": "H", "CAA": "Q", "CAG": "Q", "AAT": "N", "AAC": "N", "AAA": "K", "AAG": "K", "GAT": "D",
-            "GAC": "D", "GAA": "E", "GAG": "E", "TGT": "C", "TGC": "C", "TGA": "*", "TGG": "W", "CGT": "R", "CGC": "R",
-            "CGA": "R", "CGG": "R", "AGT": "S", "AGC": "S", "AGA": "R", "AGG": "R", "GGT": "G", "GGC": "G", "GGA": "G",
-            "GGG": "G",
-    }
-    sequence = sequence.upper()
-    protein1 = ""
-    protein2 = ""
-    protein3 = ""
+# def forward_and_reverse(sequence):
+#     codons = {
+#         "TTT": "F", "TTC": "F", "TTA": "L", "TTG": "L", "CTT": "L", "CTC": "L", "CTA": "L", "CTG": "L", "ATT": "I",
+#         "ATC": "I", "ATA": "I", "ATG": "M", "GTT": "V", "GTC": "V", "GTA": "V", "GTG": "V", "TCT": "S", "TCC": "S",
+#         "TCA": "S", "TCG": "S", "CCT": "P", "CCC": "P", "CCA": "P", "CCG": "P", "ACT": "T", "ACC": "T", "ACA": "T",
+#         "ACG": "T", "GCT": "A", "GCC": "A", "GCA": "A", "GCG": "A", "TAT": "Y", "TAC": "Y", "TAA": "*", "TAG": "*",
+#         "CAT": "H", "CAC": "H", "CAA": "Q", "CAG": "Q", "AAT": "N", "AAC": "N", "AAA": "K", "AAG": "K", "GAT": "D",
+#         "GAC": "D", "GAA": "E", "GAG": "E", "TGT": "C", "TGC": "C", "TGA": "*", "TGG": "W", "CGT": "R", "CGC": "R",
+#         "CGA": "R", "CGG": "R", "AGT": "S", "AGC": "S", "AGA": "R", "AGG": "R", "GGT": "G", "GGC": "G", "GGA": "G",
+#         "GGG": "G",
+#     }
+#
+#     complements = {
+#         "T": "A",
+#         "A": "T",
+#         "G": "C",
+#         "C": "G",
+#         "N": "N", # ambiguous base
+#         "X": "X", # unknown base
+#         "-": "-", # gap
+#         " ": "-", # treat spaces as gaps
+#     }
+#
+#     sequence = sequence.upper()
+#
+#     complement = ""
+#     for each_base in sequence:
+#         base = complements.get(each_base, "X")
+#         complement += base
+#
+#     revcomp = complement[::-1]
+#
+#     protein1 = ""
+#     protein2 = ""
+#     protein3 = ""
+#     protein4 = ""
+#     protein5 = ""
+#     protein6 = ""
+#
+#     for each_base in range(len(sequence) - 2):
+#         codon = sequence[each_base:each_base+3]
+#         amino_acid = codons.get(codon, "X")
+#         frame = each_base % 3
+#         if frame == 0:
+#             protein1 += amino_acid
+#         elif frame == 1:
+#             protein2 += amino_acid
+#         else:
+#             protein3 += amino_acid
+#
+#     for each_base in range(len(revcomp) - 2):
+#         codon = revcomp[each_base:each_base+3]
+#         amino_acid = codons.get(codon, "X")
+#         frame = each_base % 3
+#         if frame == 0:
+#             protein4 += amino_acid
+#         elif frame == 1:
+#             protein5 += amino_acid
+#         else:
+#             protein6 += amino_acid
+#
+#     return protein1, protein2, protein3, protein4, protein5, protein6
+#
+#
+# seq = "GCTGAGACTTCCTGGACGGGGGACAGGCTGTGGGGTTTCTCAGATAACTGGGCCCCTGCGCTCAGGAGGCCTTCACCC"
+#
+# p1, p2, p3, p4, p5, p6 = forward_and_reverse(seq)
+# print("Forward")
+# print("1", p1)
+# print("2", p2)
+# print("3", p3)
+# print("Reverse")
+# print("4", p4)
+# print("5", p5)
+# print("6", p6)
 
-    for first_codon in range(0, len(sequence)-2, 3):
-        codon1 = sequence[first_codon:first_codon+3]
-        amino_acid1 = codons.get(codon1, "X")
-        protein1 += amino_acid1
+## 2.5. Count single, di-nucleotide and tri-nucleotides in a sequence.
 
-    for second_codon in range(1, len(sequence)-2, 3):
-        codon2 = sequence[second_codon:second_codon+3]
-        amino_acid2 = codons.get(codon2, "X")
-        protein2 += amino_acid2
+def count_bases(sequence):
+    adenosine = 0
+    cytosine = 0
+    guanine = 0
+    thymine = 0
+    undefined = 0
 
-    for third_codon in range(2, len(sequence)-2, 3):
-        codon3 = sequence[third_codon:third_codon+3]
-        amino_acid3 = codons.get(codon3, "X")
-        protein3 += amino_acid3
+    for each_base in sequence:
+        if each_base == "a":
+            adenosine += 1
+        elif each_base == "c":
+            cytosine += 1
+        elif each_base == "g":
+            guanine += 1
+        elif each_base == "t":
+            thymine += 1
+        else:
+            undefined += 1
+            
+    print("A:", adenosine)
+    print("C:", cytosine)
+    print("G:", guanine)
+    print("T:", thymine)
+    print("U:", undefined)
 
-    return protein1, protein2, protein3
+count_bases("aggagtaagcccttgcaactggaaatacacccattg")
 
-seq = "aggagtaagcccttgcaactggaaatacacccattg"
-
-print(forward_and_reverse(seq))
