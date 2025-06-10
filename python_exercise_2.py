@@ -184,7 +184,7 @@ def count_bases(sequence):
             thymine += 1
         else:
             undefined += 1
-            
+
     print("A:", adenosine)
     print("C:", cytosine)
     print("G:", guanine)
